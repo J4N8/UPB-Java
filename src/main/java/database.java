@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 public class database {
 
+    //Used to establish connection to database.
     private static Connection connect() {
         Connection con = null;
         try {
@@ -18,7 +19,7 @@ public class database {
         return con;
     }
 
-    //change from void
+    //Selects all countries from the databse and returns them in an array of strings (separated by "|")
     public static ArrayList<String> selectAllCountries() {
         String cmd = "SELECT * FROM countries";
         ArrayList<String> countries = new ArrayList<>();
@@ -27,12 +28,11 @@ public class database {
              Statement st = con.createStatement();
              ResultSet set = st.executeQuery(cmd)) {
 
-            // loop through the records
             while (set.next()) {
                 //Country c = new Country(set.getInt("id"));
                 String temp = "";
                 temp = temp + set.getString("id");
-                temp = temp + ", ";
+                temp = temp + "|";
                 temp = temp + set.getString("name");
                 countries.add(temp);
             }
@@ -45,6 +45,7 @@ public class database {
         return countries;
     }
 
+    //Selects all products from database and returns them in an array of Product class objects
     public static ArrayList<Product> selectAllProducts() {
         String cmd = "SELECT * FROM products";
         ArrayList<Product> products = new ArrayList<>();
@@ -53,7 +54,6 @@ public class database {
              Statement st = con.createStatement();
              ResultSet set = st.executeQuery(cmd)) {
 
-            // loop through the records
             while (set.next()) {
                 Product p = new Product(set.getInt("id"));
                 p.name = set.getString("name");
@@ -68,5 +68,24 @@ public class database {
         }
 
         return products;
+    }
+
+    //Gets user's id from the database if email and password are correct.
+    public static int loginUser(String email, String password) {
+        String cmd = "SELECT id FROM users WHERE email = '" + email + "' AND password = '" + password + "';";
+        int id = 0;
+        try (Connection con = connect();
+             Statement st = con.createStatement();
+             ResultSet set = st.executeQuery(cmd)) {
+
+            while (set.next()) {
+                id = set.getInt("id");
+            }
+
+        } catch (SQLException e) {
+            //Messages.databaseReadingError(database, e.getMessage());
+            System.out.println("Error selecting from database!");
+        }
+        return id;
     }
 }
