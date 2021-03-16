@@ -84,7 +84,7 @@
             <properties/>
             <border type="none"/>
             <children>
-              <component id="24ce3" class="javax.swing.JTextField" default-binding="true">
+              <component id="24ce3" class="javax.swing.JTextField" binding="registerEmailTextField">
                 <constraints>
                   <grid row="0" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                     <preferred-size width="150" height="-1"/>
@@ -99,7 +99,7 @@
                   </grid>
                 </constraints>
               </vspacer>
-              <component id="d4a42" class="javax.swing.JPasswordField" default-binding="true">
+              <component id="d4a42" class="javax.swing.JPasswordField" binding="registerPasswordField">
                 <constraints>
                   <grid row="1" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                     <preferred-size width="150" height="-1"/>
@@ -135,14 +135,6 @@
                   <verticalTextPosition value="0"/>
                 </properties>
               </component>
-              <component id="47d0" class="javax.swing.JPasswordField" default-binding="true">
-                <constraints>
-                  <grid row="2" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                    <preferred-size width="150" height="-1"/>
-                  </grid>
-                </constraints>
-                <properties/>
-              </component>
               <component id="f0fbe" class="javax.swing.JLabel">
                 <constraints>
                   <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
@@ -151,14 +143,6 @@
                   <text value="Name: "/>
                 </properties>
               </component>
-              <component id="bbb1a" class="javax.swing.JPasswordField" default-binding="true">
-                <constraints>
-                  <grid row="3" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                    <preferred-size width="150" height="-1"/>
-                  </grid>
-                </constraints>
-                <properties/>
-              </component>
               <component id="cb6fa" class="javax.swing.JLabel">
                 <constraints>
                   <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
@@ -166,6 +150,22 @@
                 <properties>
                   <text value="Surname: "/>
                 </properties>
+              </component>
+              <component id="d8e72" class="javax.swing.JTextField" binding="registerNameTextField">
+                <constraints>
+                  <grid row="2" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                    <preferred-size width="150" height="-1"/>
+                  </grid>
+                </constraints>
+                <properties/>
+              </component>
+              <component id="5a4bc" class="javax.swing.JTextField" binding="registerSurnameTextField">
+                <constraints>
+                  <grid row="3" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                    <preferred-size width="150" height="-1"/>
+                  </grid>
+                </constraints>
+                <properties/>
               </component>
             </children>
           </grid>

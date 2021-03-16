@@ -7,4 +7,17 @@ public class Login {
     private JPasswordField loginPasswordTextField;
     private JButton loginButton;
     private JButton registerButton;
+    private JTextField registerEmailTextField;
+    private JPasswordField registerPasswordField;
+    private JTextField registerNameTextField;
+    private JTextField registerSurnameTextField;
+
+    public Login() {
+        JFrame jframe = new JFrame("UPB-Java");
+        jframe.setContentPane(panel1);
+        jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        jframe.pack();
+        jframe.setSize(1050, 400);
+        jframe.setVisible(true);
+    }
 }
