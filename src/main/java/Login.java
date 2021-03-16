@@ -11,6 +11,7 @@ public class Login {
     private JPasswordField registerPasswordField;
     private JTextField registerNameTextField;
     private JTextField registerSurnameTextField;
+    private JComboBox registerCityComboBox;
 
     public Login() {
         JFrame jframe = new JFrame("UPB-Java");
@@ -19,5 +20,12 @@ public class Login {
         jframe.pack();
         jframe.setSize(1050, 400);
         jframe.setVisible(true);
+
+        setActionListeners();
+    }
+
+    private void setActionListeners(){
+        registerButton.addActionListener(e ->
+                database.registerNewUser(registerEmailTextField.getText().trim(), registerPasswordField.getPassword().toString(), registerNameTextField.getText(), registerSurnameTextField.getText(), registerCityComboBox.getSelectedItem().toString()));
     }
 }

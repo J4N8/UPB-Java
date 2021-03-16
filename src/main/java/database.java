@@ -1,6 +1,5 @@
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -39,7 +38,7 @@ public class database {
 
         } catch (SQLException e) {
             //Messages.databaseReadingError(database, e.getMessage());
-            System.out.println("Error selecting from database!");
+            System.out.println("Error getting data from database!");
         }
 
         return countries;
@@ -64,7 +63,7 @@ public class database {
 
         } catch (SQLException e) {
             //Messages.databaseReadingError(database, e.getMessage());
-            System.out.println("Error selecting from database!");
+            System.out.println("Error getting data from database!");
         }
 
         return products;
@@ -84,8 +83,27 @@ public class database {
 
         } catch (SQLException e) {
             //Messages.databaseReadingError(database, e.getMessage());
-            System.out.println("Error selecting from database!");
+            System.out.println("Error getting data from database!");
         }
         return id;
+    }
+
+    //Registers new user. Returns false if that email already exists and true if it worked.
+    public static boolean registerNewUser(String email, String password, String name, String surname, String city) {
+        String cmd = "SELECT registerNewUser('" + email + "', '" + password + "', '" + name + "', '" + surname + "', '" + city + "';";
+        boolean added = false;
+        try (Connection con = connect();
+             Statement st = con.createStatement();
+             ResultSet set = st.executeQuery(cmd)) {
+
+            while (set.next()) {
+                added = set.getBoolean(0);
+            }
+
+        } catch (SQLException e) {
+            //Messages.databaseReadingError(database, e.getMessage());
+            System.out.println("Error getting data from database!");
+        }
+        return added;
     }
 }
