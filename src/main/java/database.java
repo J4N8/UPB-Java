@@ -19,7 +19,7 @@ public class database {
     }
 
     //change from void
-    public static void selectAllCountries() {
+    public static ArrayList<String> selectAllCountries() {
         String cmd = "SELECT * FROM countries";
         ArrayList<String> countries = new ArrayList<>();
 
@@ -32,8 +32,9 @@ public class database {
                 //Country c = new Country(set.getInt("id"));
                 String temp = "";
                 temp = temp + set.getString("id");
+                temp = temp + ", ";
                 temp = temp + set.getString("name");
-                System.out.println(temp);
+                countries.add(temp);
             }
 
         } catch (SQLException e) {
@@ -41,6 +42,31 @@ public class database {
             System.out.println("Error selecting from database!");
         }
 
-        //return contacts;
+        return countries;
+    }
+
+    public static ArrayList<Product> selectAllProducts() {
+        String cmd = "SELECT * FROM products";
+        ArrayList<Product> products = new ArrayList<>();
+
+        try (Connection con = connect();
+             Statement st = con.createStatement();
+             ResultSet set = st.executeQuery(cmd)) {
+
+            // loop through the records
+            while (set.next()) {
+                Product p = new Product(set.getInt("id"));
+                p.name = set.getString("name");
+                p.price = set.getFloat("price");
+                p.description = set.getString("description");
+                products.add(p);
+            }
+
+        } catch (SQLException e) {
+            //Messages.databaseReadingError(database, e.getMessage());
+            System.out.println("Error selecting from database!");
+        }
+
+        return products;
     }
 }

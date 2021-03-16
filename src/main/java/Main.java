@@ -7,8 +7,7 @@ import java.util.List;
 public class Main {
 
     public static void main(String[] args) {
-        database.selectAllCountries();
-
+        //Opens new Login form
         new Login();
     }
 }
