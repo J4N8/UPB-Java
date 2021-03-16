@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.util.ArrayList;
 
 public class Login {
     private JTabbedPane tabbedPane1;
@@ -22,10 +23,21 @@ public class Login {
         jframe.setVisible(true);
 
         setActionListeners();
+
+        //fill city combobox with items from database
+        loadCities();
     }
 
     private void setActionListeners(){
         registerButton.addActionListener(e ->
                 database.registerNewUser(registerEmailTextField.getText().trim(), registerPasswordField.getPassword().toString(), registerNameTextField.getText(), registerSurnameTextField.getText(), registerCityComboBox.getSelectedItem().toString()));
+    }
+
+    //loads city combobox items from database
+    private void loadCities(){
+        DefaultComboBoxModel model = new DefaultComboBoxModel();
+        model.addAll(database.selectAllCities());
+        ArrayList<String> cities = database.selectAllCities();
+        registerCityComboBox.setModel(model);
     }
 }

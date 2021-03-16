@@ -106,4 +106,27 @@ public class database {
         }
         return added;
     }
+
+    //Selects all cities from database and returns them in an array of strings
+    public static ArrayList<String> selectAllCities() {
+        String cmd = "SELECT * FROM cities";
+        ArrayList<String> cities = new ArrayList<>();
+
+        try (Connection con = connect();
+             Statement st = con.createStatement();
+             ResultSet set = st.executeQuery(cmd)) {
+
+            while (set.next()) {
+                String c = set.getString("name");
+                c = c + " | " + set.getString("zip_code");
+                cities.add(c);
+            }
+
+        } catch (SQLException e) {
+            //Messages.databaseReadingError(database, e.getMessage());
+            System.out.println("Error getting data from database!");
+        }
+
+        return cities;
+    }
 }
