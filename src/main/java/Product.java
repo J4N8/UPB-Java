@@ -1,0 +1,32 @@
+public class Product {
+    /**
+     * Product id (used in database operations)
+     */
+    int id;
+
+    String name, description;
+
+    float price;
+
+    /**
+     * Contact constructor
+     *
+     * @param id the new product id
+     */
+    Product(int id) {
+        this.id = id;
+    }
+
+    /**
+     * Contact constructor
+     *
+     * @param id   the new contact it
+     * @param name contact name
+     */
+    Product(int id, String name, float price, String description) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.description = description;
+    }
+}
