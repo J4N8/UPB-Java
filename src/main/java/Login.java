@@ -29,12 +29,23 @@ public class Login {
     }
 
     private void setActionListeners(){
+        //register button on click
         registerButton.addActionListener(e ->{
-            if (database.registerNewUser(registerEmailTextField.getText().trim(), registerPasswordField.getPassword().toString(), registerNameTextField.getText(), registerSurnameTextField.getText(), registerCityComboBox.getSelectedItem().toString()) == true){
+            if (database.registerNewUser(registerEmailTextField.getText().trim(), registerPasswordField.getText(), registerNameTextField.getText(), registerSurnameTextField.getText(), registerCityComboBox.getSelectedItem().toString()) == true){
                 Messages.registerUserSuccessful(panel1);
             }
             else{
                 Messages.registerUserFailed(panel1);
+            }
+        });
+
+        //login button on click
+        loginButton.addActionListener(e -> {
+            if (database.loginUser(loginEmailTextField.getText(), loginPasswordTextField.getText()) != 0){
+                Messages.loginUserSuccessful(panel1);
+            }
+            else{
+                Messages.loginUserFailed(panel1);
             }
         });
 
