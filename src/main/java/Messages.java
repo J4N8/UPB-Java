@@ -94,4 +94,16 @@ public class Messages {
                 "Error", JOptionPane.ERROR_MESSAGE);
     }
 
+    static void registerUserSuccessful(JPanel panel) {
+        JOptionPane.showMessageDialog(panel,
+                "You registered successfully. Go to login tab to log in!",
+                "Registration complete", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    static void registerUserFailed(JPanel panel) {
+        JOptionPane.showMessageDialog(panel,
+                "Registration failed. Please try again!",
+                "Registration failed", JOptionPane.ERROR_MESSAGE);
+    }
+
 }

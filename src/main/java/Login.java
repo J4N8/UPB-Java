@@ -29,8 +29,15 @@ public class Login {
     }
 
     private void setActionListeners(){
-        registerButton.addActionListener(e ->
-                database.registerNewUser(registerEmailTextField.getText().trim(), registerPasswordField.getPassword().toString(), registerNameTextField.getText(), registerSurnameTextField.getText(), registerCityComboBox.getSelectedItem().toString()));
+        registerButton.addActionListener(e ->{
+            if (database.registerNewUser(registerEmailTextField.getText().trim(), registerPasswordField.getPassword().toString(), registerNameTextField.getText(), registerSurnameTextField.getText(), registerCityComboBox.getSelectedItem().toString()) == true){
+                Messages.registerUserSuccessful(panel1);
+            }
+            else{
+                Messages.registerUserFailed(panel1);
+            }
+        });
+
     }
 
     //loads city combobox items from database

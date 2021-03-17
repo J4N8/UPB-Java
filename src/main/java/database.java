@@ -31,14 +31,14 @@ public class database {
                 //Country c = new Country(set.getInt("id"));
                 String temp = "";
                 temp = temp + set.getString("id");
-                temp = temp + "|";
+                temp = temp + ", ";
                 temp = temp + set.getString("name");
                 countries.add(temp);
             }
 
         } catch (SQLException e) {
             //Messages.databaseReadingError(database, e.getMessage());
-            System.out.println("Error getting data from database!");
+            System.out.println("selectAllCountries - Error getting data from database!");
         }
 
         return countries;
@@ -63,7 +63,7 @@ public class database {
 
         } catch (SQLException e) {
             //Messages.databaseReadingError(database, e.getMessage());
-            System.out.println("Error getting data from database!");
+            System.out.println("selectAllProducts - error getting data from database!");
         }
 
         return products;
@@ -83,28 +83,29 @@ public class database {
 
         } catch (SQLException e) {
             //Messages.databaseReadingError(database, e.getMessage());
-            System.out.println("Error getting data from database!");
+            System.out.println("loginUser - error getting data from database!");
         }
         return id;
     }
 
     //Registers new user. Returns false if that email already exists and true if it worked.
     public static boolean registerNewUser(String email, String password, String name, String surname, String city) {
-        String cmd = "SELECT registerNewUser('" + email + "', '" + password + "', '" + name + "', '" + surname + "', '" + city + "';";
-        boolean added = false;
+        String cmd = "SELECT registerNewUser('" + email + "', '" + password + "', '" + name + "', '" + surname + "', '" + city.split(",")[1].trim() + "');";
+        boolean success = false;
         try (Connection con = connect();
              Statement st = con.createStatement();
              ResultSet set = st.executeQuery(cmd)) {
 
             while (set.next()) {
-                added = set.getBoolean(0);
+                success = set.getBoolean(1);
             }
 
         } catch (SQLException e) {
             //Messages.databaseReadingError(database, e.getMessage());
-            System.out.println("Error getting data from database!");
+            System.out.println("registerNewUser - error getting data from database!");
+            System.out.println(e.getMessage());
         }
-        return added;
+        return success;
     }
 
     //Selects all cities from database and returns them in an array of strings
@@ -118,13 +119,13 @@ public class database {
 
             while (set.next()) {
                 String c = set.getString("name");
-                c = c + " | " + set.getString("zip_code");
+                c = c + ", " + set.getString("zip_code");
                 cities.add(c);
             }
 
         } catch (SQLException e) {
             //Messages.databaseReadingError(database, e.getMessage());
-            System.out.println("Error getting data from database!");
+            System.out.println("selectAllCities - error getting data from database!");
         }
 
         return cities;
