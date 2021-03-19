@@ -29,4 +29,9 @@ public class Product {
         this.price = price;
         this.description = description;
     }
+
+    @Override
+    public String toString(){
+        return id + name + price + description;
+    }
 }
