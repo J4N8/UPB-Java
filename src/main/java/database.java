@@ -5,7 +5,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-public class database {
+public class
+database {
 
     //Used to establish connection to database.
     private static Connection connect() {

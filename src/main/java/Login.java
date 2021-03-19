@@ -34,6 +34,9 @@ public class Login {
         registerButton.addActionListener(e ->{
             if (database.registerNewUser(registerEmailTextField.getText().trim(), registerPasswordField.getText(), registerNameTextField.getText(), registerSurnameTextField.getText(), registerCityComboBox.getSelectedItem().toString()) == true){
                 Messages.registerUserSuccessful(panel1);
+
+
+
             }
             else{
                 Messages.registerUserFailed(panel1);
@@ -44,6 +47,8 @@ public class Login {
         loginButton.addActionListener(e -> {
             if (database.loginUser(loginEmailTextField.getText(), loginPasswordTextField.getText()) != 0){
                 Messages.loginUserSuccessful(panel1);
+
+
             }
             else{
                 Messages.loginUserFailed(panel1);
