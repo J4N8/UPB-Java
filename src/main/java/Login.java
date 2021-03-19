@@ -55,7 +55,6 @@ public class Login {
     private void loadCities(){
         DefaultComboBoxModel model = new DefaultComboBoxModel();
         model.addAll(database.selectAllCities());
-        ArrayList<String> cities = database.selectAllCities();
         registerCityComboBox.setModel(model);
     }
 }
