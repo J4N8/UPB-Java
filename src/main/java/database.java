@@ -56,7 +56,7 @@ public class database {
             while (set.next()) {
                 Product p = new Product(set.getInt("id"));
                 p.name = set.getString("name");
-                p.price = set.getFloat("price");
+                p.price = set.getDouble("price");
                 p.description = set.getString("description");
                 products.add(p);
             }
@@ -129,5 +129,19 @@ public class database {
         }
 
         return cities;
+    }
+
+    //Adds an item to shopping cart
+    public static void addToShoppingCart(int _product_id, int _user_id, double _current_price) {
+        String cmd = "INSERT INTO \"shoppingCarts\" (product_id, user_id, current_price) VALUES ('" + _product_id + "', '" + _user_id + "', '" + _current_price + "');";
+        try {Connection con = connect();
+             Statement st = con.createStatement();
+             st.executeUpdate(cmd);
+
+        } catch (SQLException e) {
+            //Messages.databaseReadingError(database, e.getMessage());
+            System.out.println("addToShoppingCart - error getting data from database!");
+            System.out.println(e.getMessage());
+        }
     }
 }
