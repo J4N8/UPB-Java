@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.util.ArrayList;
 
+
 public class Login {
     private JTabbedPane tabbedPane1;
     private JPanel panel1;
@@ -58,4 +59,8 @@ public class Login {
         ArrayList<String> cities = database.selectAllCities();
         registerCityComboBox.setModel(model);
     }
+
+
+
+
 }
