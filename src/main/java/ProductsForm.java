@@ -8,6 +8,8 @@ public class ProductsForm {
     private JPanel CartPanel;
     private JList Productlist;
     private JButton addToShoppingCartButton;
+    private JList ShoppingCartList;
+    private JButton refreshShoppingCartButton;
     private int user_id;
 
     public ProductsForm(int user_id){
