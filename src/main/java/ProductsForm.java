@@ -10,6 +10,8 @@ public class ProductsForm {
     private JButton addToShoppingCartButton;
     private JList ShoppingCartList;
     private JButton refreshShoppingCartButton;
+    private JButton removeFromShoppingCartButton;
+    private JPanel ButtonsPanel;
     private int user_id;
 
     public ProductsForm(int user_id){
@@ -48,6 +50,17 @@ public class ProductsForm {
         //Shopping cart list refresh button
         refreshShoppingCartButton.addActionListener(e -> {
             updateShoppingCart();
+        });
+
+        //Remove selected item from shopping cart
+        removeFromShoppingCartButton.addActionListener(e -> {
+            try {
+                ShoppingCart sc = (ShoppingCart) ShoppingCartList.getSelectedValue();
+                database.removeShoppingCartItem(sc, user_id);
+                updateShoppingCart();
+            } catch (Exception exception) {
+                //no item selected so do nothing
+            }
         });
     }
 
