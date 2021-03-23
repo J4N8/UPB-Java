@@ -32,6 +32,9 @@ public class ProductsForm {
             demoList.addElement(product);
         }
         Productlist.setModel(demoList);
+
+        //Fill shopping cart list on form load
+        updateShoppingCart();
     }
 
     private void setActionListeners(){
@@ -40,6 +43,24 @@ public class ProductsForm {
             Product selectedProduct = (Product) Productlist.getSelectedValue();
             database.addToShoppingCart(selectedProduct.id, user_id, selectedProduct.price);
             Messages.addedToShoppingCart(panel1);
+        });
+
+        //Shopping cart list refresh button
+        refreshShoppingCartButton.addActionListener(e -> {
+            updateShoppingCart();
+        });
+    }
+
+    //Fills in shopping cart list
+    private void updateShoppingCart(){
+        ArrayList<ShoppingCart> shoppingCart =  database.selectUserShoppingCart(user_id);
+
+        DefaultListModel<ShoppingCart> shoppingCartList = new DefaultListModel<>();
+
+        for (ShoppingCart sc: shoppingCart
+        ) {
+            shoppingCartList.addElement(sc);
         }
-    );}
+        ShoppingCartList.setModel(shoppingCartList);
+    }
 }
