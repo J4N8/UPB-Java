@@ -31,6 +31,8 @@ public class AddingProductForm {
 
 
 
+
+
         //fill categories combobox with items from database
         loadCategories();
     }

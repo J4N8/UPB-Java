@@ -1,4 +1,6 @@
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class ProductsForm {
@@ -7,6 +9,8 @@ public class ProductsForm {
     private JPanel ProductsPanel;
     private JPanel CartPanel;
     private JList Productlist;
+    private JButton AddProductButton;
+
 
     public ProductsForm(){
         JFrame jframe = new JFrame("Products");
@@ -20,6 +24,10 @@ public class ProductsForm {
 
         DefaultListModel<Product> demoList = new DefaultListModel<>();
 
+        setActionListeners();
+
+
+
         for (Product product: products
         ) {
             demoList.addElement(product);
@@ -28,5 +36,18 @@ public class ProductsForm {
         Productlist.setModel(demoList);
 
         System.out.println("teams demoList: " + demoList);
+
+
     }
+
+
+    private void setActionListeners() {
+
+        AddProductButton.addActionListener(e -> {
+            new AddingProductForm();
+
+
+        });
+    }
+
 }
