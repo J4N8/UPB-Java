@@ -128,4 +128,10 @@ public class Messages {
                 "Adding product failed :(", JOptionPane.ERROR_MESSAGE);
     }
 
+    static void addedToShoppingCart(JPanel panel) {
+        JOptionPane.showMessageDialog(panel,
+                "Product successfully added to shopping cart!",
+                "Added to shopping cart", JOptionPane.INFORMATION_MESSAGE);
+    }
+
 }

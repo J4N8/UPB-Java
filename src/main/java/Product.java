@@ -6,7 +6,7 @@ public class Product {
 
     String name, description;
 
-    float price;
+    double price;
 
     /**
      * Contact constructor
@@ -23,7 +23,7 @@ public class Product {
      * @param id   the new contact it
      * @param name contact name
      */
-    Product(int id, String name, float price, String description) {
+    Product(int id, String name, double price, String description) {
         this.id = id;
         this.name = name;
         this.price = price;
