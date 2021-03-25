@@ -187,4 +187,17 @@ public class database {
             System.out.println(e.getMessage());
         }
     }
+
+    public static void BuyShoppingCartItem(int user_id) {
+        String cmd = "UPDATE \"shoppingCarts\" SET bought = TRUE WHERE user_id = '" + user_id + "' AND bought = 'FALSE';";
+        try {Connection con = connect();
+            Statement st = con.createStatement();
+            st.executeUpdate(cmd);
+
+        } catch (SQLException e) {
+            //Messages.databaseReadingError(database, e.getMessage());
+            System.out.println("BuyShoppingCartItem - error getting data from database!");
+            System.out.println(e.getMessage());
+        }
+    }
 }

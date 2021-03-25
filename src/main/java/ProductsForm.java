@@ -65,11 +65,8 @@ public class ProductsForm {
         });
 
         checkoutButton.addActionListener(e -> {
-            /**
-            TODO add new attribute to database to mark bought items,
-             Add action so it marks items are checked out
-
-             **/
+            database.BuyShoppingCartItem(user_id);
+            updateShoppingCart();
         });
     }
 
