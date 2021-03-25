@@ -22,7 +22,7 @@ public class AddingProductForm {
     public AddingProductForm() {
         JFrame jframe = new JFrame("UPB-Java");
         jframe.setContentPane(Panel1);
-        jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        jframe.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         jframe.pack();
         jframe.setSize(250, 300);
         jframe.setVisible(true);

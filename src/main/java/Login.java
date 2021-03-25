@@ -1,6 +1,7 @@
 import javax.swing.*;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -22,7 +23,7 @@ public class Login {
     int user_id;
 
     public Login() {
-        JFrame jframe = new JFrame("UPB-Java");
+        JFrame jframe = new JFrame("Login");
         jframe.setContentPane(panel1);
         jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         jframe.pack();
@@ -88,8 +89,4 @@ public class Login {
         model.addAll(database.selectAllCities());
         registerCityComboBox.setModel(model);
     }
-
-
-
-
 }
