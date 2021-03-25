@@ -143,7 +143,7 @@ public class database {
 
     //Returns user's shopping cart
     public static ArrayList<ShoppingCart> selectUserShoppingCart(int user_id) {
-        String cmd = "SELECT sc.id, sc.date, sc.current_price, p.id, p.name, p.price, p.description FROM users u INNER JOIN \"shoppingCarts\" sc ON u.id = sc.user_id INNER JOIN products p ON sc.product_id = p.id WHERE u.id = '" + user_id + "';";
+        String cmd = "SELECT sc.id, sc.date, sc.current_price, p.id, p.name, p.price, p.description FROM users u INNER JOIN \"shoppingCarts\" sc ON u.id = sc.user_id INNER JOIN products p ON sc.product_id = p.id WHERE u.id = '" + user_id + "' AND sc.bought = FALSE;";
         ArrayList<ShoppingCart> shoppingCart = new ArrayList<ShoppingCart>();
 
         try (Connection con = connect();

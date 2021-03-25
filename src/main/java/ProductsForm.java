@@ -12,6 +12,7 @@ public class ProductsForm {
     private JButton refreshShoppingCartButton;
     private JButton removeFromShoppingCartButton;
     private JPanel ButtonsPanel;
+    private JButton checkoutButton;
     private int user_id;
 
     public ProductsForm(int user_id){
@@ -61,6 +62,14 @@ public class ProductsForm {
             } catch (Exception exception) {
                 //no item selected so do nothing
             }
+        });
+
+        checkoutButton.addActionListener(e -> {
+            /**
+            TODO add new attribute to database to mark bought items,
+             Add action so it marks items are checked out
+
+             **/
         });
     }
 
