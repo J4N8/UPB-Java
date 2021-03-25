@@ -1,11 +1,18 @@
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.*;
 import java.util.ArrayList;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.io.File;
 import java.io.IOException;
+import java.awt.image.BufferedImage;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowAdapter;
+
 
 
 public class AddingProductForm {
@@ -22,16 +29,28 @@ public class AddingProductForm {
     private JPanel Panel1;
     private JButton AddImageButton;
 
+    public static String fileName;
+    public boolean fileIfDelete = true;
+
 
     public AddingProductForm() {
         JFrame jframe = new JFrame("UPB-Java");
         jframe.setContentPane(Panel1);
-        jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        jframe.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         jframe.pack();
         jframe.setSize(250, 300);
         jframe.setVisible(true);
 
         setActionListeners();
+
+        jframe.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent evt) {
+                onExit();
+                jframe.dispose();
+            }
+        });
+
+
 
 
 
@@ -39,7 +58,18 @@ public class AddingProductForm {
 
         //fill categories combobox with items from database
         loadCategories();
+
     }
+
+    public void onExit() {
+        if (fileIfDelete == true)
+        {
+            File file = new File("%USERPROFILE%" + fileName);
+            System.out.print(file);
+            //file.delete();
+        }
+    }
+
 
     private void loadCategories(){
         DefaultComboBoxModel model = new DefaultComboBoxModel();
@@ -56,14 +86,15 @@ public class AddingProductForm {
             } else {
                 Messages.registerUserFailed(Panel1);
             }
+            fileIfDelete = false;
         });
         AddImageButton.addActionListener(e -> {
             //Shranjevanje slike
             JFileChooser chooser = new JFileChooser();
             FileNameExtensionFilter filter = new FileNameExtensionFilter(
-                    "JPG, GIF, and PNG Images", "jpg", "gif", "png");
+                    "JPG, jpeg, and PNG Images", "jpg", "png", "jpeg");
             chooser.setFileFilter(filter);
-            int returnVal = chooser.showOpenDialog(main);
+            int returnVal = chooser.showOpenDialog(Panel1);
             if (returnVal == JFileChooser.APPROVE_OPTION) {
                 File file = chooser.getSelectedFile();
                 System.out.println("You chose to open this file: "
@@ -71,20 +102,25 @@ public class AddingProductForm {
                 BufferedImage image;
                 try {
                     image = ImageIO.read(file);
-                    ImageIO.write(image, "jpg",new File("C:\Users\maksb\IdeaProjects\UPB-Java\src\img\" + file.getName()));
+                    ImageIO.write(image, "jpg",new File("src\\img\\" + file.getName()));
+                    ImageIO.write(image, "jpeg",new File("src\\img\\" + file.getName()));
+                    ImageIO.write(image, "png",new File("src\\img\\" + file.getName()));
                             fileName = file.getName();
                     fileIfDelete = true;
                 } catch (IOException ex) {
-                    Logger.getLogger(Mainpage.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(AddingProductForm.class.getName()).log(Level.SEVERE, null, ex);
 
                     //izpis errorja ce ne zberes slike
-                    JOptionPane.showMessageDialog(main,
+                    JOptionPane.showMessageDialog(Panel1,
                             "Niste izbrali slike!",
                             "Error!",
                             JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
+
+
+
     }
 
 
