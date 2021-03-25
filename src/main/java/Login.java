@@ -1,5 +1,9 @@
 import javax.swing.*;
+
+import javax.swing.*;
 import java.util.ArrayList;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 
 public class Login {
@@ -30,11 +34,33 @@ public class Login {
         //fill city combobox with items from database
         loadCities();
     }
+    public static String doHashing (String password) {
+        try {
+            MessageDigest messageDigest = MessageDigest.getInstance("MD5");
+
+            messageDigest.update(password.getBytes());
+
+            byte[] resultByteArray = messageDigest.digest();
+
+            StringBuilder sb = new StringBuilder();
+
+            for (byte b : resultByteArray) {
+                sb.append(String.format("%02x", b));
+            }
+
+            return sb.toString();
+
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+
+        return "";
+    }
 
     private void setActionListeners(){
         //register button on click
         registerButton.addActionListener(e ->{
-            if (database.registerNewUser(registerEmailTextField.getText().trim(), registerPasswordField.getText(), registerNameTextField.getText(), registerSurnameTextField.getText(), registerCityComboBox.getSelectedItem().toString()) == true){
+            if (database.registerNewUser(registerEmailTextField.getText().trim(), doHashing(registerPasswordField.getText()), registerNameTextField.getText(), registerSurnameTextField.getText(), registerCityComboBox.getSelectedItem().toString()) == true){
                 Messages.registerUserSuccessful(panel1);
             }
             else{
@@ -44,7 +70,7 @@ public class Login {
 
         //login button on click
         loginButton.addActionListener(e -> {
-            user_id = database.loginUser(loginEmailTextField.getText(), loginPasswordTextField.getText());
+            user_id = database.loginUser(loginEmailTextField.getText(), doHashing(loginPasswordTextField.getText()));
             if (user_id != 0){
                 Messages.loginUserSuccessful(panel1);
                 new ProductsForm(user_id);

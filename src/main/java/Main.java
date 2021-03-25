@@ -8,6 +8,6 @@ public class Main {
 
     public static void main(String[] args) {
         //Opens new Login form
-        new Login();
+        new ProductsForm();
     }
 }

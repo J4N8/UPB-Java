@@ -200,4 +200,46 @@ public class database {
             System.out.println(e.getMessage());
         }
     }
+  
+    public static ArrayList<String> selectAllCategories() {
+        String cmd = "SELECT * FROM categories";
+        ArrayList<String> category = new ArrayList<>();
+
+        try (Connection con = connect();
+             Statement st = con.createStatement();
+             ResultSet set = st.executeQuery(cmd)) {
+
+            while (set.next()) {
+                String name = set.getString("name");
+                int id = set.getInt("id");
+
+                category.add(id + " ; " + name);
+            }
+
+        } catch (SQLException e) {
+            //Messages.databaseReadingError(database, e.getMessage());
+            System.out.println("selectAllCategories - error getting data from database!");
+        }
+
+        return category;
+    }
+  
+    public static boolean AddNewProduct(String name, String price, String description, String category) {
+        String cmd = "SELECT AddNewProduct('" + name + "', '" + price + "', '" + description + "', '" + category.split(",")[0].trim() + "');";
+        boolean success = false;
+        try (Connection con = connect();
+             Statement st = con.createStatement();
+             ResultSet set = st.executeQuery(cmd)) {
+
+            while (set.next()) {
+                success = set.getBoolean(1);
+            }
+
+        } catch (SQLException e) {
+            //Messages.databaseReadingError(database, e.getMessage());
+            System.out.println("AddNewProduct - error getting data from database!");
+            System.out.println(e.getMessage());
+        }
+        return success;
+    }
 }

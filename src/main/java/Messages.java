@@ -117,6 +117,16 @@ public class Messages {
                 "Login failed. Please try again!",
                 "Login failed", JOptionPane.ERROR_MESSAGE);
     }
+    static void AddNewProductSuccessful(JPanel panel) {
+        JOptionPane.showMessageDialog(panel,
+                "You added the product successfully :)",
+                "Adding product complete :)<3", JOptionPane.INFORMATION_MESSAGE);
+    }
+    static void AddNewProductFailed(JPanel panel) {
+        JOptionPane.showMessageDialog(panel,
+                "Adding the product was unsuccessful :( Please try again!",
+                "Adding product failed :(", JOptionPane.ERROR_MESSAGE);
+    }
 
     static void addedToShoppingCart(JPanel panel) {
         JOptionPane.showMessageDialog(panel,
