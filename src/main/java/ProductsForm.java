@@ -77,8 +77,20 @@ public class ProductsForm {
             updateShoppingCart();
         });
 
+        //Opens adding product form
         addProductButton.addActionListener(e -> {
             new AddingProductForm();
+        });
+
+        //Refreshes purchase history list
+        refreshPurchaseHistoryButton.addActionListener(e -> {
+            ArrayList<ShoppingCart> shoppingCart = database.selectUserPurchasedItems(user_id);
+            DefaultListModel<ShoppingCart> purchaseHistoryDefaultListModel = new DefaultListModel<>();
+
+            for (ShoppingCart sc: shoppingCart){
+                purchaseHistoryDefaultListModel.addElement(sc);
+            }
+            PurchaseHistoryList.setModel(purchaseHistoryDefaultListModel);
         });
     }
 
@@ -88,8 +100,7 @@ public class ProductsForm {
 
         DefaultListModel<ShoppingCart> shoppingCartList = new DefaultListModel<>();
 
-        for (ShoppingCart sc: shoppingCart
-        ) {
+        for (ShoppingCart sc: shoppingCart){
             shoppingCartList.addElement(sc);
         }
         ShoppingCartList.setModel(shoppingCartList);
