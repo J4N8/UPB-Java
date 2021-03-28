@@ -15,6 +15,9 @@ public class ProductsForm {
     private JButton checkoutButton;
     private int user_id;
     private JButton addProductButton;
+    private JList PurchaseHistoryList;
+    private JButton refreshPurchaseHistoryButton;
+    private JPanel PurchaseHistoryPanel;
 
     public ProductsForm(int user_id){
         JFrame jframe = new JFrame("Products");
