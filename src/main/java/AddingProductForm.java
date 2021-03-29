@@ -1,8 +1,12 @@
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.*;
 import java.util.ArrayList;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.io.File;
+import java.io.IOException;
+
 
 public class AddingProductForm {
     private JTextField ProductNameTextField;
@@ -16,7 +20,7 @@ public class AddingProductForm {
     private JLabel CategoryLabel;
     private JPanel Panel;
     private JPanel Panel1;
-
+    private JButton AddImageButton;
 
 
     public AddingProductForm() {
@@ -53,7 +57,36 @@ public class AddingProductForm {
                 Messages.registerUserFailed(Panel1);
             }
         });
+        AddImageButton.addActionListener(e -> {
+            //Shranjevanje slike
+            JFileChooser chooser = new JFileChooser();
+            FileNameExtensionFilter filter = new FileNameExtensionFilter(
+                    "JPG, GIF, and PNG Images", "jpg", "gif", "png");
+            chooser.setFileFilter(filter);
+            int returnVal = chooser.showOpenDialog(main);
+            if (returnVal == JFileChooser.APPROVE_OPTION) {
+                File file = chooser.getSelectedFile();
+                System.out.println("You chose to open this file: "
+                        + file.getName());
+                BufferedImage image;
+                try {
+                    image = ImageIO.read(file);
+                    ImageIO.write(image, "jpg",new File("C:\Users\maksb\IdeaProjects\UPB-Java\src\img\" + file.getName()));
+                            fileName = file.getName();
+                    fileIfDelete = true;
+                } catch (IOException ex) {
+                    Logger.getLogger(Mainpage.class.getName()).log(Level.SEVERE, null, ex);
+
+                    //izpis errorja ce ne zberes slike
+                    JOptionPane.showMessageDialog(main,
+                            "Niste izbrali slike!",
+                            "Error!",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
     }
+
 
 
 
