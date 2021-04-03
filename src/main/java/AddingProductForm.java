@@ -81,7 +81,9 @@ public class AddingProductForm {
     private void setActionListeners() {
         //register button on click
         AddItemButton.addActionListener(e -> {
-            if (database.AddNewProduct(ProductNameTextField.getText(), ProductPriceTextField.getText(), DescriptionTextField.getText(), CategoryComboBox.getSelectedItem().toString().split(";")[1].trim()) == true) {
+            String image = "src\\main\\img\\" + fileName;
+            System.out.print(image);
+            if (database.AddNewProduct(ProductNameTextField.getText(), ProductPriceTextField.getText(), DescriptionTextField.getText(), image ,CategoryComboBox.getSelectedItem().toString().split(";")[1].trim()) == true ) {
                 Messages.AddNewProductSuccessful(Panel1);
             } else {
                 Messages.registerUserFailed(Panel1);
