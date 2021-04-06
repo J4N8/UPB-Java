@@ -1,12 +1,7 @@
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 
-public class
-database {
+public class database {
 
     //Used to establish connection to database.
     private static Connection connect() {
@@ -57,7 +52,7 @@ database {
             while (set.next()) {
                 Product p = new Product(set.getInt("id"));
                 p.name = set.getString("name");
-                p.price = set.getFloat("price");
+                p.price = set.getDouble("price");
                 p.description = set.getString("description");
                 products.add(p);
             }
@@ -131,6 +126,81 @@ database {
 
         return cities;
     }
+
+    //Adds an item to shopping cart
+    public static void addToShoppingCart(int _product_id, int _user_id, double _current_price) {
+        String cmd = "INSERT INTO \"shoppingCarts\" (product_id, user_id, current_price) VALUES ('" + _product_id + "', '" + _user_id + "', '" + _current_price + "');";
+        try {Connection con = connect();
+             Statement st = con.createStatement();
+             st.executeUpdate(cmd);
+
+        } catch (SQLException e) {
+            //Messages.databaseReadingError(database, e.getMessage());
+            System.out.println("addToShoppingCart - error getting data from database!");
+            System.out.println(e.getMessage());
+        }
+    }
+
+    //Returns user's shopping cart
+    public static ArrayList<ShoppingCart> selectUserShoppingCart(int user_id) {
+        String cmd = "SELECT sc.id, sc.date, sc.current_price, p.id, p.name, p.price, p.description FROM users u INNER JOIN \"shoppingCarts\" sc ON u.id = sc.user_id INNER JOIN products p ON sc.product_id = p.id WHERE u.id = '" + user_id + "' AND sc.bought = FALSE;";
+        ArrayList<ShoppingCart> shoppingCart = new ArrayList<ShoppingCart>();
+
+        try (Connection con = connect();
+             Statement st = con.createStatement();
+             ResultSet set = st.executeQuery(cmd)) {
+
+            while (set.next()) {
+                //get all properties needed
+                int sc_id = set.getInt(1);
+                Date sc_date = set.getDate(2);
+                double sc_current_price = set.getDouble(3);
+                int p_id = set.getInt(4);
+                String p_name = set.getString(5);
+                double p_price = set.getDouble(6);
+                String p_description = set.getString(7);
+
+                //create Products object
+                Product p = new Product(p_id, p_name, p_price, p_description);
+                ShoppingCart sc = new ShoppingCart(sc_id, sc_date, sc_current_price, p);
+                shoppingCart.add(sc);
+            }
+
+        } catch (SQLException e) {
+            //Messages.databaseReadingError(database, e.getMessage());
+            System.out.println("selectUserShoppingCart - error getting data from database!");
+            System.out.println(e.getMessage());
+        }
+
+        return shoppingCart;
+    }
+
+    public static void removeShoppingCartItem(ShoppingCart shoppingCart, int user_id) {
+        String cmd = "DELETE FROM \"shoppingCarts\" WHERE id = '" + shoppingCart.id + "' AND product_id = '" + shoppingCart.product.id + "' AND user_id = '" + user_id + "' AND date = '" + shoppingCart.date + "' AND current_price = '" + shoppingCart.current_price + "' LIMIT 1;";
+        try {Connection con = connect();
+            Statement st = con.createStatement();
+            st.executeUpdate(cmd);
+
+        } catch (SQLException e) {
+            //Messages.databaseReadingError(database, e.getMessage());
+            System.out.println("removeShoppingCartItem - error getting data from database!");
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public static void BuyShoppingCartItem(int user_id) {
+        String cmd = "UPDATE \"shoppingCarts\" SET bought = TRUE WHERE user_id = '" + user_id + "' AND bought = 'FALSE';";
+        try {Connection con = connect();
+            Statement st = con.createStatement();
+            st.executeUpdate(cmd);
+
+        } catch (SQLException e) {
+            //Messages.databaseReadingError(database, e.getMessage());
+            System.out.println("BuyShoppingCartItem - error getting data from database!");
+            System.out.println(e.getMessage());
+        }
+    }
+  
     public static ArrayList<String> selectAllCategories() {
         String cmd = "SELECT * FROM categories";
         ArrayList<String> category = new ArrayList<>();
@@ -153,7 +223,9 @@ database {
 
         return category;
     }
-    public static boolean AddNewProduct(String name, String price, String description, String image , String category) {
+
+  //Add new product to database
+        public static boolean AddNewProduct(String name, String price, String description, String image , String category) {
         String cmd = "SELECT AddNewProduct('" + name + "', '" + description + "', '" + price + "', '" +  image + "', '" + category.split(",")[0].trim() + "');";
         boolean success = false;
         try (Connection con = connect();
@@ -170,5 +242,39 @@ database {
             System.out.println(e.getMessage());
         }
         return success;
+    }
+
+    //Get all purchased items
+    public static ArrayList<ShoppingCart> selectUserPurchasedItems(int user_id) {
+        String cmd = "SELECT sc.id, sc.date, sc.current_price, p.id, p.name, p.price, p.description FROM users u INNER JOIN \"shoppingCarts\" sc ON u.id = sc.user_id INNER JOIN products p ON sc.product_id = p.id WHERE u.id = '" + user_id + "' AND sc.bought = TRUE;";
+        ArrayList<ShoppingCart> shoppingCart = new ArrayList<ShoppingCart>();
+
+        try (Connection con = connect();
+             Statement st = con.createStatement();
+             ResultSet set = st.executeQuery(cmd)) {
+
+            while (set.next()) {
+                //get all properties needed
+                int sc_id = set.getInt(1);
+                Date sc_date = set.getDate(2);
+                double sc_current_price = set.getDouble(3);
+                int p_id = set.getInt(4);
+                String p_name = set.getString(5);
+                double p_price = set.getDouble(6);
+                String p_description = set.getString(7);
+
+                //create Products object
+                Product p = new Product(p_id, p_name, p_price, p_description);
+                ShoppingCart sc = new ShoppingCart(sc_id, sc_date, sc_current_price, p);
+                shoppingCart.add(sc);
+            }
+
+        } catch (SQLException e) {
+            //Messages.databaseReadingError(database, e.getMessage());
+            System.out.println("selectUserPurchasedItems - error getting data from database!");
+            System.out.println(e.getMessage());
+        }
+
+        return shoppingCart;
     }
 }

@@ -58,7 +58,6 @@ public class AddingProductForm {
 
         //fill categories combobox with items from database
         loadCategories();
-
     }
 
     public void onExit() {
@@ -120,14 +119,5 @@ public class AddingProductForm {
                 }
             }
         });
-
-
-
     }
-
-
-
-
-
-
 }

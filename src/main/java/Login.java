@@ -1,6 +1,7 @@
 import javax.swing.*;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -19,8 +20,10 @@ public class Login {
     private JTextField registerSurnameTextField;
     private JComboBox registerCityComboBox;
 
+    int user_id;
+
     public Login() {
-        JFrame jframe = new JFrame("UPB-Java");
+        JFrame jframe = new JFrame("Login");
         jframe.setContentPane(panel1);
         jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         jframe.pack();
@@ -68,8 +71,10 @@ public class Login {
 
         //login button on click
         loginButton.addActionListener(e -> {
-            if (database.loginUser(loginEmailTextField.getText(), doHashing(loginPasswordTextField.getText())) != 0){
+            user_id = database.loginUser(loginEmailTextField.getText(), doHashing(loginPasswordTextField.getText()));
+            if (user_id != 0){
                 Messages.loginUserSuccessful(panel1);
+                new ProductsForm(user_id);
             }
             else{
                 Messages.loginUserFailed(panel1);
@@ -82,11 +87,6 @@ public class Login {
     private void loadCities(){
         DefaultComboBoxModel model = new DefaultComboBoxModel();
         model.addAll(database.selectAllCities());
-        ArrayList<String> cities = database.selectAllCities();
         registerCityComboBox.setModel(model);
     }
-
-
-
-
 }
