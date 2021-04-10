@@ -46,7 +46,7 @@ public class ProductInfo {
         Productprice.setText("Price: " + ProductInfo.price + "€" );
         ProductDesc.setText(ProductInfo.description );
 
-        ImageIcon slika = new ImageIcon(ProductInfo.image);
+        ImageIcon slika = new ImageIcon(new ImageIcon(ProductInfo.image).getImage().getScaledInstance(300, 300, Image.SCALE_DEFAULT));
         Imagelabel.setIcon(slika);
         Imagelabel.setText("");
 
