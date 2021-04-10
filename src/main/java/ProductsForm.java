@@ -106,8 +106,9 @@ public class ProductsForm {
             public void mouseClicked(MouseEvent evt) {
                 JList Productlist = (JList)evt.getSource();
                 if (evt.getClickCount() == 2) {
-                    int index = Productlist.locationToIndex(evt.getPoint());
-                    new ProductInfo();
+                    Product selectedProduct = (Product) Productlist.getSelectedValue();
+                    int id = selectedProduct.id;
+                    new ProductInfo(id);
                 }
             }
         });

@@ -278,4 +278,34 @@ public class database {
 
         return shoppingCart;
     }
+
+    public static ProductInfo SelectProductInfo(int id)
+    {
+        String com = "SELECT p.name,p.price,p.description,p.image FROM products p WHERE p.id = '" + id + "' ";
+        ProductInfo ProductInfo = new ProductInfo();
+
+
+        try (Connection con = connect();
+             Statement stat = con.createStatement();
+             ResultSet rez = stat.executeQuery(com)) {
+
+            while (rez.next()) {
+                String name = rez.getString(1);
+                Double price = rez.getDouble(2);
+                String desc = rez.getString(3);
+                String image = rez.getString(4);
+
+
+                ProductInfo = new ProductInfo(name,price,desc,image);
+
+
+            }
+
+        } catch (SQLException e) {
+
+            System.out.println("error getting product info " + e);
+        }
+        return ProductInfo;
+    }
+
 }
