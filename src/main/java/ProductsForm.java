@@ -34,9 +34,6 @@ public class ProductsForm {
 
         DefaultListModel<Product> demoList = new DefaultListModel<>();
 
-        setActionListeners();
-
-
         for (Product product: products
         ) {
             demoList.addElement(product);
