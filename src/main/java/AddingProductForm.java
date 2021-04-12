@@ -29,7 +29,6 @@ public class AddingProductForm {
     private JPanel Panel1;
     private JButton AddImageButton;
     private JLabel AddImageLabel;
-
     public static String fileName;
     public boolean fileIfDelete = true;
 

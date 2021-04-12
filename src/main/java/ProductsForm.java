@@ -36,12 +36,7 @@ public class ProductsForm {
         ArrayList<Product> products =  database.selectAllProducts();
 
         DefaultListModel<Product> demoList = new DefaultListModel<>();
-
-        setActionListeners();
-
-
-
-
+      
         for (Product product: products
         ) {
             demoList.addElement(product);

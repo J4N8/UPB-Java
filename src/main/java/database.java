@@ -176,7 +176,7 @@ public class database {
     }
 
     public static void removeShoppingCartItem(ShoppingCart shoppingCart, int user_id) {
-        String cmd = "DELETE FROM \"shoppingCarts\" WHERE id = '" + shoppingCart.id + "' AND product_id = '" + shoppingCart.product.id + "' AND user_id = '" + user_id + "' AND date = '" + shoppingCart.date + "' AND current_price = '" + shoppingCart.current_price + "' LIMIT 1;";
+        String cmd = "DELETE FROM \"shoppingCarts\" WHERE id = '" + shoppingCart.id + "';";
         try {Connection con = connect();
             Statement st = con.createStatement();
             st.executeUpdate(cmd);
@@ -224,8 +224,8 @@ public class database {
         return category;
     }
 
-    //Add new product to database
-    public static boolean AddNewProduct(String name, String price, String description, String image , String category) {
+  //Add new product to database
+        public static boolean AddNewProduct(String name, String price, String description, String image , String category) {
         String cmd = "SELECT AddNewProduct('" + name + "', '" + description + "', '" + price + "', '" +  image + "', '" + category.split(",")[0].trim() + "');";
         boolean success = false;
         try (Connection con = connect();
