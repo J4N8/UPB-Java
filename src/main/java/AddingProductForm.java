@@ -28,7 +28,7 @@ public class AddingProductForm {
     private JPanel Panel;
     private JPanel Panel1;
     private JButton AddImageButton;
-
+    private JLabel AddImageLabel;
     public static String fileName;
     public boolean fileIfDelete = true;
 
@@ -80,7 +80,7 @@ public class AddingProductForm {
     private void setActionListeners() {
         //register button on click
         AddItemButton.addActionListener(e -> {
-            String image = "src\\main\\img\\" + fileName;
+            String image = "src\\img\\" + fileName;
             System.out.print(image);
             if (database.AddNewProduct(ProductNameTextField.getText(), ProductPriceTextField.getText(), DescriptionTextField.getText(), image ,CategoryComboBox.getSelectedItem().toString().split(";")[1].trim()) == true ) {
                 Messages.AddNewProductSuccessful(Panel1);
@@ -106,7 +106,7 @@ public class AddingProductForm {
                     ImageIO.write(image, "jpg",new File("src\\img\\" + file.getName()));
                     ImageIO.write(image, "jpeg",new File("src\\img\\" + file.getName()));
                     ImageIO.write(image, "png",new File("src\\img\\" + file.getName()));
-                            fileName = file.getName();
+                    fileName = file.getName();
                     fileIfDelete = true;
                 } catch (IOException ex) {
                     Logger.getLogger(AddingProductForm.class.getName()).log(Level.SEVERE, null, ex);

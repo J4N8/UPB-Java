@@ -244,6 +244,7 @@ public class database {
         return success;
     }
 
+
     //Get all purchased items
     public static ArrayList<ShoppingCart> selectUserPurchasedItems(int user_id) {
         String cmd = "SELECT sc.id, sc.date, sc.current_price, p.id, p.name, p.price, p.description FROM users u INNER JOIN \"shoppingCarts\" sc ON u.id = sc.user_id INNER JOIN products p ON sc.product_id = p.id WHERE u.id = '" + user_id + "' AND sc.bought = TRUE;";
@@ -277,4 +278,34 @@ public class database {
 
         return shoppingCart;
     }
+
+    public static ProductInfo SelectProductInfo(int id)
+    {
+        String com = "SELECT p.name,p.price,p.description,p.image FROM products p WHERE p.id = '" + id + "' ";
+        ProductInfo ProductInfo = new ProductInfo();
+
+
+        try (Connection con = connect();
+             Statement stat = con.createStatement();
+             ResultSet rez = stat.executeQuery(com)) {
+
+            while (rez.next()) {
+                String name = rez.getString(1);
+                Double price = rez.getDouble(2);
+                String desc = rez.getString(3);
+                String image = rez.getString(4);
+
+
+                ProductInfo = new ProductInfo(name,price,desc,image);
+
+
+            }
+
+        } catch (SQLException e) {
+
+            System.out.println("error getting product info " + e);
+        }
+        return ProductInfo;
+    }
+
 }

@@ -1,4 +1,7 @@
 import javax.swing.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
 public class ProductsForm {
@@ -33,7 +36,7 @@ public class ProductsForm {
         ArrayList<Product> products =  database.selectAllProducts();
 
         DefaultListModel<Product> demoList = new DefaultListModel<>();
-
+      
         for (Product product: products
         ) {
             demoList.addElement(product);
@@ -42,6 +45,9 @@ public class ProductsForm {
 
         //Fill shopping cart list on form load
         updateShoppingCart();
+
+
+
     }
 
     private void setActionListeners(){
@@ -88,6 +94,18 @@ public class ProductsForm {
                 purchaseHistoryDefaultListModel.addElement(sc);
             }
             PurchaseHistoryList.setModel(purchaseHistoryDefaultListModel);
+        });
+
+        Productlist.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent evt) {
+                JList Productlist = (JList)evt.getSource();
+                if (evt.getClickCount() == 2) {
+                    Product selectedProduct = (Product) Productlist.getSelectedValue();
+                    int id = selectedProduct.id;
+                    new ProductInfo(id);
+                }
+            }
         });
     }
 
