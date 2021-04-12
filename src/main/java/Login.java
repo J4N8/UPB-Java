@@ -74,6 +74,7 @@ public class Login {
             user_id = database.loginUser(loginEmailTextField.getText(), doHashing(loginPasswordTextField.getText()));
             if (user_id != 0){
                 Messages.loginUserSuccessful(panel1);
+                JFrame.getFrames()[0].dispose();
                 new ProductsForm(user_id);
             }
             else{
