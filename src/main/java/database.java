@@ -176,7 +176,7 @@ public class database {
     }
 
     public static void removeShoppingCartItem(ShoppingCart shoppingCart, int user_id) {
-        String cmd = "DELETE FROM \"shoppingCarts\" WHERE id = '" + shoppingCart.id + "' AND product_id = '" + shoppingCart.product.id + "' AND user_id = '" + user_id + "' AND date = '" + shoppingCart.date + "' AND current_price = '" + shoppingCart.current_price + "' LIMIT 1;";
+        String cmd = "DELETE FROM \"shoppingCarts\" WHERE id = '" + shoppingCart.id + "';";
         try {Connection con = connect();
             Statement st = con.createStatement();
             st.executeUpdate(cmd);
