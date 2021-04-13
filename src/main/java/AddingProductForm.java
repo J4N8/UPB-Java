@@ -29,15 +29,17 @@ public class AddingProductForm {
     private JButton AddImageButton;
     public static String fileName;
     public boolean fileIfDelete = true;
+    ProductsForm main_form;
 
 
-    public AddingProductForm() {
+    public AddingProductForm(ProductsForm main_form) {
         JFrame jframe = new JFrame("UPB-Java");
         jframe.setContentPane(Panel1);
         jframe.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         jframe.pack();
         jframe.setSize(250, 300);
         jframe.setVisible(true);
+        this.main_form = main_form;
 
         setActionListeners();
 
@@ -82,6 +84,7 @@ public class AddingProductForm {
             System.out.print(image);
             if (database.AddNewProduct(ProductNameTextField.getText(), ProductPriceTextField.getText(), DescriptionTextField.getText(), image ,CategoryComboBox.getSelectedItem().toString().split(";")[1].trim()) == true ) {
                 Messages.AddNewProductSuccessful(Panel1);
+                main_form.updateProductsList();
             } else {
                 Messages.registerUserFailed(Panel1);
             }

@@ -32,15 +32,7 @@ public class ProductsForm {
 
         setActionListeners();
 
-        ArrayList<Product> products = database.selectAllProducts();
-
-        DefaultListModel<Product> demoList = new DefaultListModel<>();
-
-        for (Product product : products
-        ) {
-            demoList.addElement(product);
-        }
-        Productlist.setModel(demoList);
+        updateProductsList();
 
         //Fill shopping cart list on form load
         updateShoppingCart();
@@ -53,6 +45,17 @@ public class ProductsForm {
             purchaseHistoryDefaultListModel.addElement(sc);
         }
         PurchaseHistoryList.setModel(purchaseHistoryDefaultListModel);
+    }
+
+    public void updateProductsList(){
+        ArrayList<Product> products = database.selectAllProducts();
+        DefaultListModel<Product> demoList = new DefaultListModel<>();
+
+        for (Product product : products
+        ) {
+            demoList.addElement(product);
+        }
+        Productlist.setModel(demoList);
     }
 
     private void setActionListeners() {
@@ -88,7 +91,7 @@ public class ProductsForm {
 
         //Opens adding product form
         addProductButton.addActionListener(e -> {
-            new AddingProductForm();
+            new AddingProductForm(this);
         });
 
         //Refreshes purchase history list
@@ -101,6 +104,8 @@ public class ProductsForm {
             }
             PurchaseHistoryList.setModel(purchaseHistoryDefaultListModel);
         });
+
+        //dodaj funkcijo da ozveži products ko dodaš nov produkt (ko odpreš dodajanje produkta form pošlješ zraven tt main form da se lahka pol kliče funkcija za update.
 
         Productlist.addMouseListener(new MouseAdapter() {
             @Override
