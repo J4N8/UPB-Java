@@ -1,7 +1,6 @@
 import javax.swing.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
 public class ProductsForm {
@@ -22,7 +21,7 @@ public class ProductsForm {
     private JButton refreshPurchaseHistoryButton;
     private JPanel PurchaseHistoryPanel;
 
-    public ProductsForm(int user_id){
+    public ProductsForm(int user_id) {
         JFrame jframe = new JFrame("Products");
         jframe.setContentPane(panel1);
         jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -33,11 +32,11 @@ public class ProductsForm {
 
         setActionListeners();
 
-        ArrayList<Product> products =  database.selectAllProducts();
+        ArrayList<Product> products = database.selectAllProducts();
 
         DefaultListModel<Product> demoList = new DefaultListModel<>();
-      
-        for (Product product: products
+
+        for (Product product : products
         ) {
             demoList.addElement(product);
         }
@@ -46,16 +45,23 @@ public class ProductsForm {
         //Fill shopping cart list on form load
         updateShoppingCart();
 
+        //Load purchase history on form load
+        ArrayList<ShoppingCart> shoppingCart = database.selectUserPurchasedItems(user_id);
+        DefaultListModel<ShoppingCart> purchaseHistoryDefaultListModel = new DefaultListModel<>();
 
-
+        for (ShoppingCart sc : shoppingCart) {
+            purchaseHistoryDefaultListModel.addElement(sc);
+        }
+        PurchaseHistoryList.setModel(purchaseHistoryDefaultListModel);
     }
 
-    private void setActionListeners(){
+    private void setActionListeners() {
         //Add to shopping cart button on click
-        addToShoppingCartButton.addActionListener(e ->{
+        addToShoppingCartButton.addActionListener(e -> {
             Product selectedProduct = (Product) Productlist.getSelectedValue();
             database.addToShoppingCart(selectedProduct.id, user_id, selectedProduct.price);
             Messages.addedToShoppingCart(panel1);
+            updateShoppingCart();
         });
 
         //Shopping cart list refresh button
@@ -90,7 +96,7 @@ public class ProductsForm {
             ArrayList<ShoppingCart> shoppingCart = database.selectUserPurchasedItems(user_id);
             DefaultListModel<ShoppingCart> purchaseHistoryDefaultListModel = new DefaultListModel<>();
 
-            for (ShoppingCart sc: shoppingCart){
+            for (ShoppingCart sc : shoppingCart) {
                 purchaseHistoryDefaultListModel.addElement(sc);
             }
             PurchaseHistoryList.setModel(purchaseHistoryDefaultListModel);
@@ -99,7 +105,7 @@ public class ProductsForm {
         Productlist.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent evt) {
-                JList Productlist = (JList)evt.getSource();
+                JList Productlist = (JList) evt.getSource();
                 if (evt.getClickCount() == 2) {
                     Product selectedProduct = (Product) Productlist.getSelectedValue();
                     int id = selectedProduct.id;
@@ -110,12 +116,12 @@ public class ProductsForm {
     }
 
     //Fills in shopping cart list
-    private void updateShoppingCart(){
-        ArrayList<ShoppingCart> shoppingCart =  database.selectUserShoppingCart(user_id);
+    private void updateShoppingCart() {
+        ArrayList<ShoppingCart> shoppingCart = database.selectUserShoppingCart(user_id);
 
         DefaultListModel<ShoppingCart> shoppingCartList = new DefaultListModel<>();
 
-        for (ShoppingCart sc: shoppingCart){
+        for (ShoppingCart sc : shoppingCart) {
             shoppingCartList.addElement(sc);
         }
         ShoppingCartList.setModel(shoppingCartList);
