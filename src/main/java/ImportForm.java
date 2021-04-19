@@ -3,7 +3,11 @@ import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -50,6 +54,29 @@ public class ImportForm {
                             "Error!",
                             JOptionPane.ERROR_MESSAGE);
                 }
+            }
+        });
+
+        importButton.addActionListener(e -> {
+            //Check if separator text box is empty or not
+            if (separatorTextField.getText().trim() != ""){
+                try {
+                    Scanner scanner = new Scanner(import_file);
+                    while (scanner.hasNextLine()){
+                        String[] line = scanner.nextLine().split(separatorTextField.getText().trim());
+                        try {
+                            database.importData(user_id, line[0], line[1], Integer.parseInt(line[2]), line[3], Integer.parseInt(line[4]));
+                        }
+                        catch (Exception ex){
+                            JOptionPane.showMessageDialog(panel1, "Error reading file!", "Error!", JOptionPane.ERROR_MESSAGE);
+                        }
+                    }
+                } catch (FileNotFoundException fileNotFoundException) {
+                    fileNotFoundException.printStackTrace();
+                }
+            }
+            else { //separator text box is empty - display error message
+                JOptionPane.showMessageDialog(panel1, "You must enter a valid separator!", "Error!", JOptionPane.ERROR_MESSAGE);
             }
         });
     }

@@ -1,4 +1,5 @@
 import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class database {
@@ -308,4 +309,69 @@ public class database {
         return ProductInfo;
     }
 
+    public static void importData(int user_id, String name, String description, double price, String category_name, int quantity) {
+        //Imports product
+        String cmd = "INSERT INTO products (name, description, price, category_id) VALUES ('" + name + "', '" + description + "', '" + price + "', " +
+                "'" + returnCategoryId(category_name) + "');";
+        try {Connection con = connect();
+            Statement st = con.createStatement();
+            st.executeUpdate(cmd);
+        } catch (SQLException e) {
+            //Messages.databaseReadingError(database, e.getMessage());
+            System.out.println("importData (product) - error getting data from database!");
+            System.out.println(e.getMessage());
+        }
+        //Imports shopping cart
+        String cmd2 = "INSERT INTO \"shoppingCarts\" (product_id, user_id, date, current_price, bought) VALUES ('" + returnProductId(name, description, price) + "', '" + user_id + "', '" + LocalDateTime.now() + "', " +
+                "'" + price + "', TRUE);";
+        for (int i = 0; i < quantity; i++) {
+            try {Connection con = connect();
+                Statement st = con.createStatement();
+                st.executeUpdate(cmd2);
+            } catch (SQLException e) {
+                //Messages.databaseReadingError(database, e.getMessage());
+                System.out.println("importData (shopping cart) - error getting data from database!");
+                System.out.println(e.getMessage());
+            }
+        }
+
+    }
+
+    public static int returnCategoryId(String category_name) {
+        int id = -1;
+        String cmd = "SELECT name FROM categories WHERE name = '" + category_name + "' LIMIT 1;";
+        try (Connection con = connect();
+             Statement st = con.createStatement();
+             ResultSet set = st.executeQuery(cmd)) {
+
+            while (set.next()) {
+                id = set.getInt(1);
+            }
+
+        } catch (SQLException e) {
+            //Messages.databaseReadingError(database, e.getMessage());
+            System.out.println("returnCategoryId - error getting data from database!");
+            System.out.println(e.getMessage());
+        }
+        return id;
+    }
+
+    public static int returnProductId(String name, String description, double price)
+    {
+        String com = "SELECT id FROM products WHERE name = '" + name + "' AND description = '" + description + "' AND price = '" + price + "' LIMIT 1;";
+        int id = -1;
+        try (Connection con = connect();
+             Statement stat = con.createStatement();
+             ResultSet rez = stat.executeQuery(com)) {
+
+            while (rez.next()) {
+                id = rez.getInt(0);
+            }
+
+        } catch (SQLException e) {
+
+            System.out.println("error getting product info " + e);
+        }
+        return id;
+    }
 }
