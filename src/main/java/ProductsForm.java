@@ -119,7 +119,7 @@ public class ProductsForm {
         });
 
         importButton.addActionListener(e -> {
-            new ImportForm();
+            new ImportForm(user_id);
         });
     }
 
