@@ -20,6 +20,7 @@ public class ProductsForm {
     private JList PurchaseHistoryList;
     private JButton refreshPurchaseHistoryButton;
     private JPanel PurchaseHistoryPanel;
+    private JButton importButton;
 
     public ProductsForm(int user_id) {
         JFrame jframe = new JFrame("Products");
@@ -105,8 +106,6 @@ public class ProductsForm {
             PurchaseHistoryList.setModel(purchaseHistoryDefaultListModel);
         });
 
-        //dodaj funkcijo da ozveži products ko dodaš nov produkt (ko odpreš dodajanje produkta form pošlješ zraven tt main form da se lahka pol kliče funkcija za update.
-
         Productlist.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent evt) {
@@ -117,6 +116,10 @@ public class ProductsForm {
                     new ProductInfo(id);
                 }
             }
+        });
+
+        importButton.addActionListener(e -> {
+            new ImportForm(user_id);
         });
     }
 
